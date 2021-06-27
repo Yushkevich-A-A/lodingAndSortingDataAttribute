@@ -1,0 +1,9 @@
+{
+  "name": "lodingAndSortingDataAttribute",
+  "version": "1.0.0",
+  "description": "Loading and sorting dataAttribute ",
+  "main": "index.js",
+  "repository": "https://github.com/Yushkevich-A-A/lodingAndSortingDataAttribute.git",
+  "author": "Yushkevich-A-A <Mortifer1993@yandex.ru>",
+  "license": "MIT"
+}

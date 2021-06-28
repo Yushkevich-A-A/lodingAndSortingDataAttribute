@@ -1,4 +1,6 @@
 .table {
+  margin-left: auto;
+  margin-right: auto;
   background-color: #c8c8c8;
 	border-spacing: 10px;
 	border-collapse: separate;

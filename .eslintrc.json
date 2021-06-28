@@ -18,6 +18,9 @@
             "WithStatement"
           ],
         "no-unused-vars": "off",
-        "no-console": "off"
+        "no-console": "off",
+        "no-plusplus": "off",
+        "no-nested-ternary": "off",
+        "no-new": "off"
     }
 }

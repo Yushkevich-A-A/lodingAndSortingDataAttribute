@@ -41,9 +41,8 @@ export default class Table {
       }
       this.tbody = document.querySelector('.tbody');
       this.tbody.appendChild(trData);
-
-      this.sortMethod();
     }
+    this.sortMethod();
   }
 
   drawTBody(sortData) {
@@ -63,12 +62,15 @@ export default class Table {
   sortTimeout(param) {
     const arr = Array.from(this.tbody.children);
     const testVal = document.querySelector(`[data-${param}]`).dataset[param];
-    if (typeof parseFloat(testVal) === 'number') {
+    if (isNaN(parseFloat(testVal))) {
       setTimeout(() => {
-        arr.sort((a, b) => a.dataset[param] - b.dataset[param]);
+        arr.sort((a, b) => ((a.dataset[param] > b.dataset[param]) ? 1
+          : (a.dataset[param] < b.dataset[param]) ? -1 : 0));
         this.drawTBody(arr);
         setTimeout(() => {
-          arr.sort((a, b) => b.dataset[param] - a.dataset[param]);
+          arr.sort((a, b) => ((a.dataset[param] > b.dataset[param]) ? -1
+            : (a.dataset[param] < b.dataset[param]) ? 1
+              : 0));
           this.drawTBody(arr);
           this.index++;
           this.sortMethod();
@@ -76,14 +78,10 @@ export default class Table {
       }, 2000);
     } else {
       setTimeout(() => {
-        arr.sort((a, b) => ((a.dataset[param] > b.dataset[param]) ? 1
-          : (a.dataset[param] < b.dataset[param]) ? -1
-            : 0));
+        arr.sort((a, b) => a.dataset[param] - b.dataset[param]);
         this.drawTBody(arr);
         setTimeout(() => {
-          arr.sort((a, b) => ((a.dataset[param] > b.dataset[param]) ? -1
-            : (a.dataset[param] < b.dataset[param]) ? 1
-              : 0));
+          arr.sort((a, b) => b.dataset[param] - a.dataset[param]);
           this.drawTBody(arr);
           this.index++;
           this.sortMethod();

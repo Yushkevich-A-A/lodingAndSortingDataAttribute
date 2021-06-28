@@ -21,6 +21,7 @@
         "no-console": "off",
         "no-plusplus": "off",
         "no-nested-ternary": "off",
-        "no-new": "off"
+        "no-new": "off",
+        "no-restricted-globals": "off"
     }
 }

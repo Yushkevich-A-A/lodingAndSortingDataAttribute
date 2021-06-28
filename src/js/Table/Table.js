@@ -10,8 +10,13 @@ export default class Table {
   drawTable() {
     this.table = document.createElement('table');
     this.table.classList.add('table');
-    this.table.innerHTML = `<thead class="thead"></thead>
-                              <tbody class="tbody"></tbody>`;
+    this.table.innerHTML = `<thead class="thead">
+                              <th>id</th>
+                              <th>title</th>
+                              <th>year</th>
+                              <th>imdb</th>
+                            </thead>  
+                            <tbody class="tbody"></tbody>`;
 
     document.body.appendChild(this.table);
 
@@ -33,8 +38,8 @@ export default class Table {
       const trData = document.createElement('tr');
       trData.innerHTML = `<td>#${item.id}</td>
                         <td>${item.title}</td>
-                        <td>imdb:${item.imdb}</td>
-                        <td>(${item.year})</td>`;
+                        <td>(${item.year})</td>
+                        <td>imdb:${item.imdb}</td>`;
 
       for (const i of Object.keys(item)) {
         trData.dataset[i] = item[i];

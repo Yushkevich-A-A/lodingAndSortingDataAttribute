@@ -1,0 +1,18 @@
+.table {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #c8c8c8;
+	border-spacing: 10px;
+	border-collapse: separate;
+	max-width: 400px;
+  width: 100%;
+  border-radius: 5px;
+
+}
+
+td, th {
+  background-color: #ffffff;
+	text-align: center;
+  border-radius: 5px;
+  box-shadow: 2px 2px 3px 1px #000000;
+}

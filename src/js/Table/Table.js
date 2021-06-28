@@ -1,109 +1,100 @@
 export default class Table {
   constructor(data = null) {
     this.data = data;
-    this.thead = document.querySelector('.thead');
-    this.tbody = document.querySelector('.tbody');
+    this.paramDataSet = Object.keys(this.data[0]);
     this.index = 0;
 
-    this.sortParametr = [
-      {
-        param: 'id',
-        func: (a, b) => a.dataset.id - b.dataset.id,
-      },
-      {
-        param: 'id',
-        func: (a, b) => b.dataset.id - a.dataset.id,
-      },
-      {
-        param: 'title',
-        func: (a, b) => a.dataset.title > b.dataset.title,
-      },
-      {
-        param: 'title',
-        func: (a, b) => a.dataset.title < b.dataset.title,
-      },
-      {
-        param: 'imdb',
-        func: (a, b) => a.dataset.imdb - b.dataset.imdb,
-      },
-      {
-        param: 'imdb',
-        func: (a, b) => b.dataset.imdb - a.dataset.imdb,
-      },
-      {
-        param: 'year',
-        func: (a, b) => a.dataset.year - b.dataset.year,
-      },
-      {
-        param: 'yaer',
-        func: (a, b) => b.dataset.year - a.dataset.year,
-      },
-    ];
-
     this.drawTable();
-    this.sortInterval();
-    }
-
-    sortInterval() {
-      if (this.index === this.sortParametr.length) {
-        this.index = 0;
-      }
-      setTimeout(() => {
-        console.log(this.sortParametr);
-        this.sort(this.sortParametr[this.index].param, this.sortParametr[this.index].func);
-        this.index++;
-        this.sortInterval();
-      }, 2000);
     }
 
     drawTable() {
+
+      this.table = document.createElement('table');
+      this.table.classList.add('table');
+      this.table.innerHTML = `<thead class="thead"></thead>
+                              <tbody class="tbody"></tbody>`;
+      
+      document.body.appendChild(this.table);
+
       if(this.data == null) {
         return;
       }
-      this.drawTHead();
-      this.drawTBody();
-    }
-
-
-
-    drawTHead() {
       const tr = document.createElement('tr');
       const arrKeys = Object.keys(this.data[0])
       for(let i of arrKeys) {
         const th = document.createElement('th');
         th.dataset.thTitle = i
-        console.log(i)
         th.textContent = i;
         tr.appendChild(th);
       }
+      
+      document.querySelector('.thead').appendChild(tr);
 
-      this.thead.appendChild(tr);
-    }
-
-    drawTBody() {
       for(let item of this.data) {
+        item.imdb = item.imdb.toFixed(2);
         const tr = document.createElement('tr');
+        tr.innerHTML = `<td>#${item.id}</td>
+                        <td>${item.title}</td>
+                        <td>imdb:${item.imdb}</td>
+                        <td>(${item.year})</td>`
+                        
         for(let i of Object.keys(item)) {
           tr.dataset[i] = item[i];
-          const td = document.createElement('td');
-          td.textContent = item[i];
-          tr.appendChild(td);
         }
-
+        this.tbody = document.querySelector('.tbody');
         this.tbody.appendChild(tr);
-      }
 
+        this.sortMethod();
+      }
     }
 
-    sort( param, func = null) {
-      this.sortParametrs = Array.from(document.querySelectorAll(`[data-${param}]`));
-      
-      this.sortParametrs.sort(func);
-      for (let i of this.sortParametrs) {
-        this.tbody.append(i);
+    drawTBody(sortData) {
+      for(let i of sortData) {
+        this.tbody.appendChild(i);
       }
-
-
     }
 
+    sortMethod() {
+      if (this.index === this.paramDataSet.length) {
+        this.index = 0;
+      }
+      const parametr = this.paramDataSet[this.index];
+      this.sortTimeout(parametr)
+    }
+
+    sortTimeout(param) {
+      const arr = Array.from(this.tbody.children);
+      const testVal = document.querySelector(`[data-${param}]`).dataset[param];
+      if (isNaN(parseFloat(testVal))) {
+        setTimeout(() => {
+          arr.sort((a, b) => {
+            return (a.dataset[param] > b.dataset[param]) ?  1 :
+                    (a.dataset[param] < b.dataset[param]) ? -1 : 
+                    0;
+          });
+          this.drawTBody(arr);
+          setTimeout(() => {
+            arr.sort((a, b) => {
+              return (a.dataset[param] > b.dataset[param]) ? -1 :
+                     (a.dataset[param] < b.dataset[param]) ? 1 : 
+                      0;
+            })
+            this.drawTBody(arr);
+            this.index++;
+            this.sortMethod();
+          }, 2000);
+        }, 2000);
+      } else {
+        setTimeout(() => {
+          arr.sort((a, b) => a.dataset[param] - b.dataset[param]);
+          this.drawTBody(arr);
+          setTimeout(() => {
+            arr.sort((a, b) => b.dataset[param] - a.dataset[param]);
+            this.drawTBody(arr);
+            this.index++;
+            this.sortMethod();
+          }, 2000);
+        }, 2000);
+      }
+    }
 }

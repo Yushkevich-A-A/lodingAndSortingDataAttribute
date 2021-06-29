@@ -12,7 +12,34 @@
 
 td, th {
   background-color: #ffffff;
-	text-align: center;
   border-radius: 5px;
   box-shadow: 2px 2px 3px 1px #000000;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+td {
+	text-align: center;
+}
+
+th {
+	text-align: left;
+}
+
+.increase::after {
+  content: '\2191';
+}
+
+.decrease::after {
+  content: '\2193';
+}
+
+.increase::after,
+.decrease::after {
+    display: inline-block;
+    font-size: 10px;
+    margin-left: 4px;
+    vertical-align: middle;
+    line-height: 0px;
+    margin-bottom: 5px;
 }

@@ -1,7 +1,9 @@
+/* eslint-disable  class-methods-use-this */
+
 export default class Table {
   constructor(data = null) {
     this.data = data;
-    this.paramDataSet = ['id','title','year', 'imdb'];
+    this.paramDataSet = ['id', 'title', 'year', 'imdb'];
     this.index = 0;
 
     this.drawTable();
@@ -18,7 +20,7 @@ export default class Table {
     this.thead = document.querySelector('.thead');
 
     const trHead = document.createElement('tr');
-    for(let i of this.paramDataSet) {
+    for (const i of this.paramDataSet) {
       const th = document.createElement('th');
       th.dataset.columnType = i;
       th.dataset.th = 'th';
@@ -28,8 +30,6 @@ export default class Table {
 
     this.thead.appendChild(trHead);
 
-
-    
     if (this.data == null) {
       return;
     }
@@ -78,26 +78,26 @@ export default class Table {
   }
 
   funcSort(a, b) {
-  const valA = (isNaN(parseFloat(a))) ? a: parseFloat(a);
-  const valB = (isNaN(parseFloat(b))) ? b: parseFloat(b);
-  if (valA > valB) {
-    return 1;
-  }
-  if (valA < valB) {
-    return -1;
-  }
-  return 0;
+    const valA = (isNaN(parseFloat(a))) ? a : parseFloat(a);
+    const valB = (isNaN(parseFloat(b))) ? b : parseFloat(b);
+    if (valA > valB) {
+      return 1;
+    }
+    if (valA < valB) {
+      return -1;
+    }
+    return 0;
   }
 
   drawArrow(column, arrowUp = false) {
     const arrColumnTitle = document.querySelectorAll('[data-th="th"]');
-    for (let i of arrColumnTitle) {
+    for (const i of arrColumnTitle) {
       i.classList.remove('increase', 'decrease');
     }
 
     const columnElement = document.querySelector(`[data-column-type="${column}"]`);
 
-    if(arrowUp) {
+    if (arrowUp) {
       columnElement.classList.add('decrease');
     } else {
       columnElement.classList.add('increase');

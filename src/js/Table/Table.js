@@ -92,8 +92,7 @@ export default class Table {
   drawArrow(column, arrowUp = false) {
     const arrColumnTitle = document.querySelectorAll('[data-th="th"]');
     for (let i of arrColumnTitle) {
-      i.classList.remove('increase');
-      i.classList.remove('decrease');
+      i.classList.remove('increase', 'decrease');
     }
 
     const columnElement = document.querySelector(`[data-column-type="${column}"]`);
